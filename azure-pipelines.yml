@@ -52,5 +52,6 @@ steps:
   displayName: 'NuGet Authenticate'
 
 - script: |
-      dotnet nuget push /home/kuper/ALL_WS/azure-devops-project/myagent/_work/1/a/*.nupkg --source "hello-world" --api-key $(az)
+      dotnet nuget push --source "hello-world" --api-key az /home/kuper/ALL_WS/azure-devops-project/myagent/_work/1/s/*.dll
+     
   displayName: 'Push to Azure Artifacts'

@@ -20,12 +20,17 @@ steps:
     sudo apt install -y openssl
   displayName: 'Install OpenSSL (if required)'
 
-
+- script: |
+    echo "Source Directory: $(Build.SourcesDirectory)"
+  displayName: 'Print Source Directory'
 - task: UseDotNet@2
   inputs:
     packageType: sdk
     version: 8.x 
     installationPath: $(Agent.ToolsDirectory)/dotnet
+
+
+
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'
   inputs:
@@ -47,5 +52,5 @@ steps:
   displayName: 'NuGet Authenticate'
 
 - script: |
-      dotnet nuget push $(Build.ArtifactStagingDirectory)/*.nupkg --source "hello-world" --api-key $(az)
+      dotnet nuget push /home/kuper/ALL_WS/azure-devops-project/myagent/_work/1/a/*.nupkg --source "hello-world" --api-key $(az)
   displayName: 'Push to Azure Artifacts'

@@ -43,6 +43,14 @@ steps:
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: pack
+    versioningScheme: byPrereleaseNumber
+    majorVersion: $(Major)
+    minorVersion: $(Minor)
+    patchVersion: $(Patch)
+  displayName: 'Pack .NET Core project as NuGet package'
 
 - task: PublishPipelineArtifact@1
   inputs:
@@ -52,5 +60,6 @@ steps:
   displayName: 'Publish NuGet package as pipeline artifact'
 
 - script: |
+    dotnet nuget push --source https://pkgs.dev.azure.com/kupkup1992/Hello-Wold/_packaging/hello-world/nuget/v3/index.json --api-key az $(Build.ArtifactStagingDirectory)/*.nupkg
     dotnet nuget push --source "hello-world" --api-key az $(Build.ArtifactStagingDirectory)/*.nupkg
   displayName: 'Push to Azure Artifacts'

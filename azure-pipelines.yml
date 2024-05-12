@@ -24,7 +24,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: sdk
-    version: 5.x # Replace with the version of the .NET SDK you want to install
+    version: 8.0 
     installationPath: $(Agent.ToolsDirectory)/dotnet
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'

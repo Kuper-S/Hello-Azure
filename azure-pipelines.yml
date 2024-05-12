@@ -24,10 +24,12 @@ steps:
   displayName: 'List project files before build'
   inputs:
     command: custom
-    custom: |
-      cd $(Build.SourcesDirectory)
-      ls -la  # Command to list files in the current directory
-
+    custom: 'ls -la'
+- task: UseDotNet@2
+  inputs:
+    packageType: sdk
+    version: 5.x # Replace with the version of the .NET SDK you want to install
+    installationPath: $(Agent.ToolsDirectory)/dotnet
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'
   inputs:

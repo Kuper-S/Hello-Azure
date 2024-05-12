@@ -32,7 +32,7 @@ steps:
   displayName: 'Build .NET Core project'
   inputs:
     command: 'build'
-    projects: '**/*.csproj'  
+    projects: 'Hello-Wold/HelloWorld.sln'  
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
 
 - task: DotNetCoreCLI@2

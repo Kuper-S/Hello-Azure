@@ -22,10 +22,15 @@ steps:
 - script: |
     sudo apt update
     sudo apt install -y openssl
+    sudo ls -la $(Build.ArtifactStagingDirectory)
   displayName: 'Install OpenSSL'
 
-- script: dotnet build --configuration Release --output $(Build.ArtifactStagingDirectory)
+- task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'  # Replace this with the path to your .csproj file
+    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
 
 - task: DotNetCoreCLI@2
   inputs:

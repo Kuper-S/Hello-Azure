@@ -7,7 +7,9 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  name: Default         
+  demands:               # Optional: Specify any additional demands your self-hosted agent should meet
+  - Agent.Name -equals chepopo-dell
 
 steps:
 - script: echo Hello, world!

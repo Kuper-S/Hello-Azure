@@ -8,7 +8,7 @@ trigger:
 
 pool:
   name: Default         
-  demands:               # Optional: Specify any additional demands your self-hosted agent should meet
+  demands:              
   - Agent.Name -equals chepopo-dell
 
 
@@ -24,13 +24,26 @@ steps:
     sudo apt install -y openssl
     sudo ls -la $(Build.ArtifactStagingDirectory)
   displayName: 'Install OpenSSL'
+- task: DotNetCoreCLI@2
+  displayName: 'List project files before build'
+  inputs:
+    command: custom
+    custom: |
+      cd $(Build.SourcesDirectory)
+      ls -la  # Command to list files in the current directory
 
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'
   inputs:
     command: 'build'
-    projects: '**/*.csproj'  # Replace this with the path to your .csproj file
+    projects: '**/*.csproj'  
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'List built artifacts after build'
+  inputs:
+    command: custom
+    custom: 'ls -la $(Build.ArtifactStagingDirectory)'
 
 - task: DotNetCoreCLI@2
   inputs:

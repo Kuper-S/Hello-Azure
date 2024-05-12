@@ -7,6 +7,7 @@
 trigger:
 - main
 
+
 pool:
   name: Default         
   demands:              
@@ -43,14 +44,8 @@ steps:
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: pack
-    versioningScheme: byPrereleaseNumber
-    majorVersion: '$(Major)'
-    minorVersion: '$(Minor)'
-    patchVersion: '$(Patch)'
-  displayName: 'Pack .NET Core project as NuGet package'
+- script: dotnet pack
+  displayName: 'Packing app'
 
 - task: PublishPipelineArtifact@1
   inputs:

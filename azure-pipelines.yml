@@ -18,12 +18,12 @@ steps:
     packageType: 'sdk'
     version: '3.x'
 
-
+# Install OpenSSL if required (modify if a specific version is needed)
 - script: |
     sudo apt update
     sudo apt install -y openssl
-    sudo ls -la $(Build.ArtifactStagingDirectory)
-  displayName: 'Install OpenSSL'
+  displayName: 'Install OpenSSL (if required)'
+
 - task: DotNetCoreCLI@2
   displayName: 'List project files before build'
   inputs:
@@ -43,7 +43,7 @@ steps:
   displayName: 'List built artifacts after build'
   inputs:
     command: custom
-    custom: 'ls -la $(Build.ArtifactStagingDirectory)'
+    custom: 'ls -la'
 
 - task: DotNetCoreCLI@2
   inputs:

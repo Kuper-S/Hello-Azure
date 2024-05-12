@@ -3,6 +3,7 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+
 trigger:
 - main
 
@@ -11,25 +12,17 @@ pool:
   demands:              
   - Agent.Name -equals chepopo-dell
 
-
 steps:
-
-# Install OpenSSL if required (modify if a specific version is needed)
-- script: |
-    sudo apt update
-    sudo apt install -y openssl
-  displayName: 'Install OpenSSL (if required)'
 
 - script: |
     echo "Source Directory: $(Build.SourcesDirectory)"
   displayName: 'Print Source Directory'
+
 - task: UseDotNet@2
   inputs:
     packageType: sdk
     version: 8.x 
     installationPath: $(Agent.ToolsDirectory)/dotnet
-
-
 
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'
@@ -37,7 +30,6 @@ steps:
     command: 'build'
     projects: '**/*.csproj'  
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
-
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -51,7 +43,22 @@ steps:
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: pack
+    versioningScheme: byPrereleaseNumber
+    majorVersion: $(Major)
+    minorVersion: $(Minor)
+    patchVersion: $(Patch)
+  displayName: 'Pack .NET Core project as NuGet package'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    artifact: 'NuGetPackage'
+    publishLocation: 'pipeline'
+  displayName: 'Publish NuGet package as pipeline artifact'
+
 - script: |
-      dotnet nuget push --source "hello-world" --api-key az /home/kuper/ALL_WS/azure-devops-project/myagent/_work/1/s/*.dll
-     
+    dotnet nuget push --source "hello-world" --api-key az $(Build.ArtifactStagingDirectory)/*.nupkg
   displayName: 'Push to Azure Artifacts'

@@ -20,11 +20,7 @@ steps:
     sudo apt install -y openssl
   displayName: 'Install OpenSSL (if required)'
 
-- task: DotNetCoreCLI@2
-  displayName: 'List project files before build'
-  inputs:
-    command: custom
-    custom: 'ls -la'
+
 - task: UseDotNet@2
   inputs:
     packageType: sdk
@@ -37,11 +33,6 @@ steps:
     projects: 'Hello-Wold/HelloWorld.sln'  
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
 
-- task: DotNetCoreCLI@2
-  displayName: 'List built artifacts after build'
-  inputs:
-    command: custom
-    custom: 'ls -la'
 
 - task: DotNetCoreCLI@2
   inputs:

@@ -55,5 +55,5 @@ steps:
   displayName: 'Publish NuGet package as pipeline artifact'
 
 - script: |
-    dotnet nuget push --source https://pkgs.dev.azure.com/kupkup1992/Hello-Wold/_packaging/hello-world/nuget/v3/index.json --api-key $(nuget-api) $(Build.ArtifactStagingDirectory)/*.nupkg
+    dotnet nuget push --source https://pkgs.dev.azure.com/kupkup1992/Hello-Wold/_packaging/hello-world/nuget/v3/index.json --api-key $(nuget-api) $(Pipeline.Workspace)/NuGetPackage/*.nupkg 
   displayName: 'Push to Azure Artifacts'

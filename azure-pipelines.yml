@@ -11,11 +11,28 @@ pool:
   demands:               # Optional: Specify any additional demands your self-hosted agent should meet
   - Agent.Name -equals chepopo-dell
 
+
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.x'
+
+- script: dotnet build --configuration Release --output $(Build.ArtifactStagingDirectory)
+  displayName: 'Build .NET Core project'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: false
+    modifyOutputPath: false
+  displayName: 'Publish .NET Core project'
+
+- task: NuGetAuthenticate@0
+  displayName: 'NuGet Authenticate'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+      dotnet nuget push $(Build.ArtifactStagingDirectory)/*.nupkg --source "hello-world" --api-key $(az)
+  displayName: 'Push to Azure Artifacts'

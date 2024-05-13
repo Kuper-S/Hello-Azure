@@ -49,11 +49,12 @@ steps:
     echo "Source Directory: $(Build.SourcesDirectory)"
     ls $(Build.ArtifactStagingDirectory)/bin/Release
     echo "Build artifact STAGING: $(Build.ArtifactStagingDirectory)/bin/Release"
+    sleep 50
   displayName: 'Print Source Directory'
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)/bin/Release/*.nupkg'
+    targetPath: '$(Build.ArtifactStagingDirectory)/bin/Release/*'
     artifact: 'HelloWorld.$(Build.BuildId)'
     publishLocation: 'pipeline'
   displayName: 'Publish NuGet package as pipeline artifact'

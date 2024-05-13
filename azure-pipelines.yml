@@ -47,12 +47,18 @@ steps:
 - script: dotnet pack -p Version=1.0.$(Build.BuildId) --output $(Build.ArtifactStagingDirectory)/bin/Release
   displayName: 'Packing app'
 
+- script: |
+    echo "Source Directory: $(Build.SourcesDirectory)"
+  displayName: 'Print Source Directory'
+
+
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '/home/kuper/ALL_WS/azure-devops-project/myagent/_work/1/a/bin/Release/*.nupkg'
-    artifact: 'HelloWorld.1.0.0'
+    targetPath: '$(Build.ArtifactStagingDirectory)/bin/Release/*.nupkg'
+    artifact: 'HelloWorld.$(Build.BuildId)'
     publishLocation: 'pipeline'
   displayName: 'Publish NuGet package as pipeline artifact'
+
 
 
 - script: |

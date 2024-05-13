@@ -23,10 +23,10 @@ steps:
     packageType: sdk
     version: 8.x 
     installationPath: $(Agent.ToolsDirectory)/dotnet
-- task: SonarQubeAnalyze@5
+- task: DotNetCoreCLI@2
   inputs:
-    jdkversion: 'JAVA_HOME_11_X64'
-
+    command: 'test'
+    projects: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'

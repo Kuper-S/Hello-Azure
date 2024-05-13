@@ -21,7 +21,7 @@ steps:
 
 - task: JavaToolInstaller@0
   inputs:
-    versionSpec: '17'
+    versionSpec: '11'
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
 
@@ -51,12 +51,15 @@ steps:
     
     
 - task: SonarQubeAnalyze@5
+  inputs:
+    workingDirectory: '$(Build.SourcesDirectory)'
   displayName: 'Run SonarQube Analysis'
 
 
 - task: SonarQubePublish@5
   inputs:
     pollingTimeoutSec: '300'
+    workingDirectory: '$(Build.SourcesDirectory)'
 
 
 - task: DotNetCoreCLI@2

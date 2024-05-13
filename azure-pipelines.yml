@@ -55,7 +55,7 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '/home/kuper/ALL_WS/azure-devops-project/myagent/_work/1/a/bin/Release*.nupkg'
+    targetPath: '/home/kuper/ALL_WS/azure-devops-project/myagent/_work/1/a/bin/Release/*.nupkg'
     artifact: 'HelloWorld.$(Build.BuildId)'
     publishLocation: 'pipeline'
   displayName: 'Publish NuGet package as pipeline artifact'

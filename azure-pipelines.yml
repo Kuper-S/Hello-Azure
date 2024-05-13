@@ -48,7 +48,6 @@ steps:
     projectKey: 'Hello-Wold_Hello-Wold_cd4547d4-1bd5-4f1c-ba17-06352af60bc5'
     projectName: 'hello-world'
     extraProperties: |
-      sonar.cs.dotnet-tests.reportPaths=$(Agent.TempDirectory)/**/*.trx
       sonar.verbose=true
 
 #- task: DotNetCoreCLI@2

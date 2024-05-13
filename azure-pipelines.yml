@@ -44,7 +44,7 @@ steps:
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
 
-- script: dotnet pack
+- script: dotnet pack -p Version=1.0.$(Build.BuildId)
   displayName: 'Packing app'
 
 - task: PublishPipelineArtifact@1

@@ -28,6 +28,8 @@ steps:
     echo "PATH=\$JAVA_HOME/bin:\$PATH" | sudo tee -a /etc/environment
     source /etc/environment
   displayName: 'Install JDK 11'
+  env:
+    BASH_ENV: /etc/profile
 
 
 
@@ -53,9 +55,13 @@ steps:
     projectKey: 'Hello-Wold_Hello-Wold_cd4547d4-1bd5-4f1c-ba17-06352af60bc5'
     projectName: 'hello-world'
     extraProperties: |
+      sonar.cs.dotnet-tests.reportPaths=$(Agent.TempDirectory)/**/*.trx
       sonar.verbose=true
     
-    
+- script: dotnet build HelloWorld.sln --configuration Release
+  displayName: 'Build Solution'
+
+
 - task: SonarQubeAnalyze@5
   inputs:
     workingDirectory: '$(Build.SourcesDirectory)'

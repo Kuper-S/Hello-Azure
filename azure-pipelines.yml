@@ -40,13 +40,6 @@ steps:
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build .NET Core project'
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
-    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
-
 
 - task: SonarQubePrepare@5
   inputs:
@@ -57,8 +50,17 @@ steps:
     extraProperties: |
       sonar.cs.dotnet-tests.reportPaths=$(Agent.TempDirectory)/**/*.trx
       sonar.verbose=true
-    
 
+#- task: DotNetCoreCLI@2
+#  displayName: 'Build .NET Core project'
+#  inputs:
+#    command: 'build'
+#    projects: '**/*.csproj'
+#    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+
+# Dotnet build task
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
 
 - task: SonarQubeAnalyze@5
   inputs:

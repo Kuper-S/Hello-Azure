@@ -47,6 +47,7 @@ steps:
 
 - script: |
     echo "Source Directory: $(Build.SourcesDirectory)"
+    ls $(Build.ArtifactStagingDirectory)/bin/Release
     echo "Build artifact STAGING: $(Build.ArtifactStagingDirectory)/bin/Release"
   displayName: 'Print Source Directory'
 

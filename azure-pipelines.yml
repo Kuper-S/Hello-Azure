@@ -44,15 +44,16 @@ steps:
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
 
-- script: dotnet pack -p Version=1.0.$(Build.BuildId)
+- script: dotnet pack -p Version=1.0.$(Build.BuildId) --output $(Build.ArtifactStagingDirectory)/bin/Release
   displayName: 'Packing app'
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    targetPath: '$(Build.ArtifactStagingDirectory)/s/bin/Release/*.nupkg'
     artifact: 'HelloWorld.1.0.0'
     publishLocation: 'pipeline'
   displayName: 'Publish NuGet package as pipeline artifact'
+
 
 - script: |
         dotnet nuget push --source https://pkgs.dev.azure.com/kupkup1992/Hello-Wold/_packaging/hello-world/nuget/v3/index.json --api-key $(az) $(System.DefaultWorkingDirectory)/bin/Release/*.nupkg

@@ -1,4 +1,5 @@
 # Starter pipeline
+
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -23,12 +24,24 @@ steps:
     version: 8.x 
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'sonar-qube'
+    scannerMode: 'MSBuild'
+    projectKey: 'Hello-Wold_Hello-Wold_cd4547d4-1bd5-4f1c-ba17-06352af60bc5'
+    projectName: 'sonar.hello-world'
+
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'
   inputs:
     command: 'build'
     projects: '**/*.csproj'
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
+
 
 - task: DotNetCoreCLI@2
   inputs:

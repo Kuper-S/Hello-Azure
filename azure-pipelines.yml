@@ -19,11 +19,17 @@ steps:
   displayName: 'Print Source Directory'
 
 
-- task: JavaToolInstaller@0
-  inputs:
-    versionSpec: '11'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
+- bash: |
+    jdkUrl="https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.9_linux-x64_bin.tar.gz"  # Ensure this URL is correct and points to a .tar.gz file
+    output="/tmp/jdk11.tar.gz"
+    wget $jdkUrl -O $output
+    sudo tar -xzf $output -C /opt/
+    echo "JAVA_HOME=/opt/jdk-11.0.9" | sudo tee -a /etc/environment
+    echo "PATH=\$JAVA_HOME/bin:\$PATH" | sudo tee -a /etc/environment
+    source /etc/environment
+  displayName: 'Install JDK 11'
+
+
 
 - task: UseDotNet@2
   inputs:

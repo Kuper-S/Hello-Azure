@@ -38,6 +38,8 @@ steps:
     projectKey: 'Hello-Wold_Hello-Wold_cd4547d4-1bd5-4f1c-ba17-06352af60bc5'
     projectName: 'hello-world'
 
+- task: SonarQubeAnalyze@5
+
 - task: SonarQubePublish@5
   inputs:
     pollingTimeoutSec: '300'

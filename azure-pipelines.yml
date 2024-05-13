@@ -18,6 +18,13 @@ steps:
     echo "Source Directory: $(Build.SourcesDirectory)"
   displayName: 'Print Source Directory'
 
+
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '17'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+
 - task: UseDotNet@2
   inputs:
     packageType: sdk

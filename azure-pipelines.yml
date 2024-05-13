@@ -7,14 +7,12 @@
 trigger:
 - main
 
-
 pool:
-  name: Default         
-  demands:              
+  name: Default
+  demands:
   - Agent.Name -equals chepopo-dell
 
 steps:
-
 - script: |
     echo "Source Directory: $(Build.SourcesDirectory)"
   displayName: 'Print Source Directory'
@@ -29,7 +27,7 @@ steps:
   displayName: 'Build .NET Core project'
   inputs:
     command: 'build'
-    projects: '**/*.csproj'  
+    projects: '**/*.csproj'
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
 
 - task: DotNetCoreCLI@2
@@ -52,16 +50,14 @@ steps:
     echo "Build artifact STAGING: $(Build.ArtifactStagingDirectory)/bin/Release"
   displayName: 'Print Source Directory'
 
-
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '/home/kuper/ALL_WS/azure-devops-project/myagent/_work/1/a/bin/Release/*.nupkg'
+    targetPath: '$(Build.ArtifactStagingDirectory)/bin/Release/*.nupkg'
     artifact: 'HelloWorld.$(Build.BuildId)'
     publishLocation: 'pipeline'
   displayName: 'Publish NuGet package as pipeline artifact'
 
-
-
 - script: |
-        dotnet nuget push --source https://pkgs.dev.azure.com/kupkup1992/Hello-Wold/_packaging/hello-world/nuget/v3/index.json --api-key $(az) $(System.DefaultWorkingDirectory)/bin/Release/*.nupkg
+    dotnet nuget push --source https://pkgs.dev.azure.com/kupkup1992/Hello-Wold/_packaging/hello-world/nuget/v3/index.json --api-key $(az) $(Build.ArtifactStagingDirectory)/bin/Release/*.nupkg
   displayName: 'Push to Azure Artifacts'
+

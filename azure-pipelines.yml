@@ -58,8 +58,6 @@ steps:
       sonar.cs.dotnet-tests.reportPaths=$(Agent.TempDirectory)/**/*.trx
       sonar.verbose=true
     
-- script: dotnet build HelloWorld.sln --configuration Release
-  displayName: 'Build Solution'
 
 
 - task: SonarQubeAnalyze@5

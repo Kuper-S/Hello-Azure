@@ -50,21 +50,13 @@ steps:
     extraProperties: |
       sonar.verbose=true
 
-#- task: DotNetCoreCLI@2
-#  displayName: 'Build .NET Core project'
-#  inputs:
-#    command: 'build'
-#    projects: '**/*.csproj'
-#    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
-
-# Dotnet build task
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet build'
-
-- task: SonarQubeAnalyze@5
+  displayName: 'Build .NET Core project'
   inputs:
-    workingDirectory: '$(Build.SourcesDirectory)'
-  displayName: 'Run SonarQube Analysis'
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+
 
 
 - task: SonarQubePublish@5

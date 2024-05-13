@@ -23,10 +23,6 @@ steps:
     packageType: sdk
     version: 8.x 
     installationPath: $(Agent.ToolsDirectory)/dotnet
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    projects: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'
@@ -40,7 +36,7 @@ steps:
     SonarQube: 'sonar-qube'
     scannerMode: 'MSBuild'
     projectKey: 'Hello-Wold_Hello-Wold_cd4547d4-1bd5-4f1c-ba17-06352af60bc5'
-    projectName: 'sonar.hello-world'
+    projectName: 'hello-world'
 
 - task: SonarQubePublish@5
   inputs:

@@ -18,6 +18,11 @@ steps:
     echo "Source Directory: $(Build.SourcesDirectory)"
   displayName: 'Print Source Directory'
 
+
+- script: |
+    sudo apt install openjdk-17-jdk -y
+  displayName: 'Install jdk for sonarQube'
+
 - task: UseDotNet@2
   inputs:
     packageType: sdk

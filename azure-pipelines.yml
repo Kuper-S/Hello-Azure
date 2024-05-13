@@ -20,7 +20,7 @@ steps:
 
 
 - bash: |
-    jdkUrl="https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.9_linux-x64_bin.tar.gz"  # Ensure this URL is correct and points to a .tar.gz file
+    jdkUrl="https://download.java.net/java/GA/jdk22.0.1/c7ec1332f7bb44aeba2eb341ae18aca4/8/GPL/openjdk-22.0.1_linux-x64_bin.tar.gz"  # Ensure this URL is correct and points to a .tar.gz file
     output="/tmp/jdk11.tar.gz"
     wget $jdkUrl -O $output
     sudo tar -xzf $output -C /opt/
@@ -65,7 +65,7 @@ steps:
 - task: SonarQubePublish@5
   inputs:
     pollingTimeoutSec: '300'
-    workingDirectory: '$(Build.SourcesDirectory)'
+    
 
 
 - task: DotNetCoreCLI@2

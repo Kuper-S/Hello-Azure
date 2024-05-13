@@ -53,9 +53,15 @@ steps:
     sleep 50
   displayName: 'Print Source Directory'
 
+- script: |
+    nuget_package=$(find $(Build.ArtifactStagingDirectory)/bin/Release -name 'HelloWorld*.nupkg')
+    echo "NuGet package found: $nuget_package"
+    echo "##vso[task.setvariable variable=NuGetPackagePath]$nuget_package"
+  displayName: 'Find NuGet package'
+
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)/bin/Release/HelloWorld*.nupkg'
+    targetPath: '$(NuGetPackagePath)'
     artifact: 'HelloWorld.$(Build.BuildId)'
     publishLocation: 'pipeline'
   displayName: 'Publish NuGet package as pipeline artifact'

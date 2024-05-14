@@ -70,7 +70,7 @@ steps:
 
 - script: |
     dotnet build
-    dotnet sonarscanner end /d:sonar.login="$(SONARQUBE_TOKEN)"
+    dotnet sonarscanner end /d:sonar.login="$(sonar-token)"
   displayName: 'End SonarQube analysis'
 
 - task: SonarQubePublish@5

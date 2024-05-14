@@ -52,6 +52,8 @@ steps:
     projectName: '$(Build.Repository.Name)'
     extraProperties: |
       sonar.cs.vstest.reportsPaths=$(Common.TestResultsDirectory)
+      sonar.branch.name=main
+      
 
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'

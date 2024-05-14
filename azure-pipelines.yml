@@ -43,21 +43,8 @@ steps:
     version: 8.x 
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
-   
-- task: SonarQubePrepare@5
-  inputs:
-    SonarQube: 'sonarqube'
-    scannerMode: 'MSBuild'
-    projectKey: 'Hello-Wold_Hello-Wold_cd4547d4-1bd5-4f1c-ba17-06352af60bc5'
-    projectName: '$(Build.Repository.Name)'
-    extraProperties: |
-      sonar.cs.vstest.reportsPaths=$(Common.TestResultsDirectory)
-      sonar.branch.name=main
       
-- script: |
-    echo "$(Build.Repository.Name)"
-    echo "$sonar.barnch.name"
-
+    
   displayName: 'Check SonarQuber info'
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'
@@ -66,6 +53,30 @@ steps:
     projects: '**/*.csproj'
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
 
+
+
+
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'sonarqube'
+    scannerMode: 'MSBuild'
+    projectKey: 'Hello-Wold_Hello-Wold_cd4547d4-1bd5-4f1c-ba17-06352af60bc5'
+    projectName: '$(Build.Repository.Name)'
+
+- script: |
+    dotnet build
+    dotnet sonarscanner begin /k:"Hello-Wold_Hello-Wold_cd4547d4-1bd5-4f1c-ba17-06352af60bc5" /n:"$(Build.Repository.Name)" /d:sonar.login="$(sonar-token)"
+  displayName: 'Begin SonarQube analysis'
+
+- script: |
+    dotnet build
+    dotnet sonarscanner end /d:sonar.login="$(SONARQUBE_TOKEN)"
+  displayName: 'End SonarQube analysis'
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
+    
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -107,11 +118,3 @@ steps:
     dotnet nuget push --source https://pkgs.dev.azure.com/kupkup1992/Hello-Wold/_packaging/hello-world/nuget/v3/index.json --api-key az $(Build.ArtifactStagingDirectory)/bin/Release/*.nupkg
   displayName: 'Push to Azure Artifacts'
 
-- task: SonarQubeAnalyze@5
-  inputs:
-    jdkversion: 'JAVA_HOME_17_X64'
-
-  
-- task: SonarQubePublish@5
-  inputs:
-    pollingTimeoutSec: '300'

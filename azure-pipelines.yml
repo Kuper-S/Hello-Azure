@@ -73,9 +73,6 @@ steps:
     dotnet sonarscanner end /d:sonar.token="sqp_c3a9d4f4742c816564afe7e3f4932808379e19d6"
   displayName: 'BUILD END'
 
-- task: SonarQubePublish@5
-  inputs:
-    pollingTimeoutSec: '300'
 
 - task: DotNetCoreCLI@2
   inputs:

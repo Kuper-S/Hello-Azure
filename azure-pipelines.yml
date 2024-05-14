@@ -43,16 +43,13 @@ steps:
     version: 8.x 
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
-
-
+   
 - task: SonarQubePrepare@5
   inputs:
     SonarQube: 'sonarqube'
     scannerMode: 'MSBuild'
     projectKey: 'Hello-Wold_Hello-Wold_cd4547d4-1bd5-4f1c-ba17-06352af60bc5'
     projectName: 'Hello-World'
-   
-
 
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'

@@ -47,8 +47,14 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'Hello-Wold_Hello-Wold_cd4547d4-1bd5-4f1c-ba17-06352af60bc5'
     projectName: 'Hello-World'
-    extraProperties: |
-      sonar.verbose=true
+   
+- script: |
+    echo "Checking environment variables and configuration files..."
+    env | sort
+    cat sonar-project.properties
+  displayName: 'Check Configurations'
+
+
 
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'
@@ -60,7 +66,7 @@ steps:
 
 - task: SonarQubeAnalyze@5
   inputs:
-    jdkversion: JAVA_HOME_17_X64
+    jdkversion: JAVA_HOME_11_X64
   continueOnError: true
   
 - task: SonarQubePublish@5

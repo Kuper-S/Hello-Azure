@@ -57,11 +57,6 @@ steps:
 #    dotnet build
 #  displayName: 'BUILD'
 
-- task: SonarQubePrepare@5
-  inputs:
-    SonarQube: 'sonarqube'
-    scannerMode: 'CLI'
-    configMode: 'file'
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core project'
   inputs:

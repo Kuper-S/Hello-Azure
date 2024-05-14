@@ -51,13 +51,16 @@ steps:
     projectName: '$(Build.Repository.Name)'
       
     
-  displayName: 'Check SonarQuber info'
 - task: DotNetCoreCLI@2
-  displayName: 'Build .NET Core project'
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
-    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+    
+#- task: DotNetCoreCLI@2
+#  displayName: 'Build .NET Core project'
+#  inputs:
+#    command: 'build'
+#    projects: '**/*.csproj'
+#    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
 
 
 

@@ -64,15 +64,12 @@ steps:
 
 - task: SonarQubeAnalyze@5
   inputs:
-    jdkversion: JAVA_HOME_11_X64
-  continueOnError: true
+    jdkversion: 'JAVA_HOME_17_X64'
   
 - task: SonarQubePublish@5
   inputs:
-    
     pollingTimeoutSec: '300'
     
-
 
 - task: DotNetCoreCLI@2
   inputs:

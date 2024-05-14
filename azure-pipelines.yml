@@ -58,11 +58,9 @@ steps:
     projects: '**/*.csproj'
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
 
-
 - task: SonarQubeAnalyze@5
   inputs:
     jdkversion: 'JAVA_HOME_17_X64'
-  continueOnError: true
   
 - task: SonarQubePublish@5
   inputs:

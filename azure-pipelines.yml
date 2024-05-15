@@ -19,15 +19,6 @@ steps:
   displayName: 'Print Source Directory'
 
 
-- bash: |
-    jdkUrl="https://download.java.net/java/GA/jdk22.0.1/c7ec1332f7bb44aeba2eb341ae18aca4/8/GPL/openjdk-22.0.1_linux-x64_bin.tar.gz"  # Ensure this URL is correct and points to a .tar.gz file
-    output="/tmp/jdk17.tar.gz"
-    wget $jdkUrl -O $output
-    sudo tar -xzf $output -C /opt/
-    echo "JAVA_HOME=/opt/jdk-17" | sudo tee -a /etc/environment 
-    echo "PATH=\$JAVA_HOME/bin:\$PATH" | sudo tee -a /etc/environment
-  displayName: 'Install JDK 17'
-
 - script: |
     echo "JAVA_HOME set to: $JAVA_HOME"
     echo "Using Java version:"

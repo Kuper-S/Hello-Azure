@@ -26,10 +26,7 @@ steps:
     sudo tar -xzf $output -C /opt/
     echo "JAVA_HOME=/opt/jdk-17" | sudo tee -a /etc/environment 
     echo "PATH=\$JAVA_HOME/bin:\$PATH" | sudo tee -a /etc/environment
-    source /etc/environment
   displayName: 'Install JDK 17'
-  env:
-    BASH_ENV: /etc/profile
 
 - script: |
     echo "JAVA_HOME set to: $JAVA_HOME"
